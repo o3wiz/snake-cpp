@@ -7,7 +7,7 @@ namespace snake {
 
 class Apple : public Drawable {
  public:
-  Apple(const Vector2& position);
+  Apple(const Vector2& position = {});
   Vector2 GetPosition() const;
   void Draw() const override;
 

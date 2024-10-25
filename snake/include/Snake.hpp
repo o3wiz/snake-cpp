@@ -24,7 +24,7 @@ enum class Collision {
 
 class Snake : public Drawable {
  public:
-  Snake(const Vector2& initialHeadPosition);
+  Snake(const Vector2& initialHeadPosition = {});
   Collision Move(const Direction newDirection, const Vector2& applePosition);
   void Draw() const override;
 
