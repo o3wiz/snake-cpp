@@ -17,7 +17,7 @@ enum class Direction {
 
 enum class Collision {
   None = 0,
-  Food,
+  Apple,
   Self,
   Wall,
 };
@@ -25,8 +25,15 @@ enum class Collision {
 class Snake : public Drawable {
  public:
   Snake(const Vector2& initialHeadPosition);
-  Collision Move(const Direction newDirection, const Vector2& foodPosition);
+  Collision Move(const Direction newDirection, const Vector2& applePosition);
   void Draw() const override;
+
+ private:
+  Vector2 getDirectionVector(const Direction direction);
+  Vector2 getHeadPosition() const;
+  void removeTail();
+  bool hasDirection() const;
+  Collision detectCollision(const Vector2& applePosition) const;
 
  private:
   std::deque<Vector2> _body;
