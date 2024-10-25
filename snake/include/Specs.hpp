@@ -20,5 +20,7 @@ constexpr Color snakeTailColor{0x2b, 0x3d, 0x00, 0xff};
 constexpr Color appleColor{0xff, 0x48, 0x24, 0xff};
 constexpr int initialSnakeBodyLength = 3;
 constexpr std::chrono::milliseconds snakeMoveRate{200};
+constexpr int scoreFontSize = 42;
+constexpr Color scoreColor = DARKGRAY;
 
 }  // namespace snake::specs

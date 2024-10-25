@@ -33,6 +33,7 @@ void Game::Draw() const {
   ClearBackground(specs::backgroundColor);
   _apple.Draw();
   _snake.Draw();
+  this->displayScore();
   EndDrawing();
 }
 
@@ -81,6 +82,15 @@ void Game::spawnNewApple() {
 void Game::reset() {
   _isRunning = false;
   _nextSnakeDirection = Direction::None;
+}
+
+int Game::currentGameScore() const {
+  return _snake.SnakeLength() - specs::initialSnakeBodyLength;
+}
+
+void Game::displayScore() const {
+  DrawText(TextFormat("score : %d", this->currentGameScore()), specs::cellSize,
+           specs::cellSize, specs::scoreFontSize, specs::scoreColor);
 }
 
 void Game::handleSnakeKeyPress() {

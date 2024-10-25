@@ -21,6 +21,8 @@ class Game : public Drawable {
   void createSnake();
   void spawnNewApple();
   void reset();
+  int currentGameScore() const;
+  void displayScore() const;
 
  private:
   Apple _apple;

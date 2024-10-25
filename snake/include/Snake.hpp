@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstddef>
 #include <deque>
 
 #include "Drawable.hpp"
@@ -28,6 +29,7 @@ class Snake : public Drawable {
   Collision Move(const Direction newDirection, const Vector2& applePosition);
   bool CollidesWith(const Vector2& position) const;
   void Draw() const override;
+  std::size_t SnakeLength() const;
 
  private:
   Vector2 getDirectionVector(const Direction direction);

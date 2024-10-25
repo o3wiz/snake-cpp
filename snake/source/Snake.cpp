@@ -94,3 +94,5 @@ void Snake::Draw() const {
     ++idx;
   }
 }
+
+std::size_t Snake::SnakeLength() const { return _body.size(); }
