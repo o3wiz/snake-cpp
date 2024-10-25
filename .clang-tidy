@@ -1,0 +1,28 @@
+---
+Checks: >
+  readability-identifier-naming*,
+
+CheckOptions:
+  readability-identifier-naming.MacroDefinitionCase: UPPER_CASE
+  readability-identifier-naming.NamespaceCase: lower_case
+  readability-identifier-naming.ClassCase: CamelCase
+  readability-identifier-naming.StructCase: CamelCase
+  readability-identifier-naming.UnionCase: CamelCase
+  readability-identifier-naming.EnumCase: CamelCase
+  readability-identifier-naming.PublicMethodCase: CamelCase
+  readability-identifier-naming.PrivateMethodCase: camelBack
+  readability-identifier-naming.ProtectedMethodCase: camelBack
+  readability-identifier-naming.PublicMemberCase: camelBack
+  readability-identifier-naming.PrivateMemberCase: camelBack
+  readability-identifier-naming.ProtectedMemberCase: camelBack
+  readability-identifier-naming.ClassMemberCase: camelBack
+  readability-identifier-naming.PrivateMemberPrefix: _
+  readability-identifier-naming.ProtectedMemberPrefix: _
+  readability-identifier-naming.ClassMemberPrefix: s_
+  readability-identifier-naming.VariableCase: camelBack
+  readability-identifier-naming.ParameterCase: camelBack
+  readability-identifier-naming.ParameterPackCase: camelBack
+  readability-identifier-naming.PointerParameterCase: camelBack
+  readability-identifier-naming.EnumConstantCase: CamelCase
+  readability-identifier-naming.StaticConstantCase: UPPER_CASE
+...
