@@ -11,7 +11,6 @@ bool utils::inBounds(const Vector2& position) {
          (0 <= y && y < specs::cellsPerColumn);
 }
 
-Vector2 utils::generateRandomPosition() {
-  return Vector2(GetRandomValue(0, specs::cellsPerRow - 1),
-                 GetRandomValue(0, specs::cellsPerColumn - 1));
+Vector2 utils::generateRandomPosition(const int xMax, const int yMax) {
+  return Vector2(GetRandomValue(0, xMax), GetRandomValue(0, yMax));
 }

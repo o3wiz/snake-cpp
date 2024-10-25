@@ -18,10 +18,18 @@ static bool isPerpDirections(const Direction dirA, const Direction dirB) {
           (dirA == Direction::Right || dirA == Direction::Left));
 }
 
-Snake::Snake(const Vector2& initialHeadPosition) : _body{initialHeadPosition} {}
+Snake::Snake(const Vector2& initialHeadPosition) {
+  for (int i = 0; i < specs::initialSnakeBodyLength; ++i) {
+    const Vector2 bodyPart = Vector2Add(initialHeadPosition, Vector2(i, 0));
+    _body.emplace_back(std::move(bodyPart));
+  }
+}
 
 Collision Snake::Move(const Direction newDirection,
                       const Vector2& applePosition) {
+  if (newDirection == Direction::None) return Collision::None;
+  if (!this->hasDirection() && newDirection == Direction::Left)
+    return Collision::None;  // ignore invalid snake movement
   const Vector2 moveVec = this->getDirectionVector(newDirection);
   if (!this->hasDirection() || isPerpDirections(newDirection, _headDirection))
     _headDirection = newDirection;

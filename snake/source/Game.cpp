@@ -19,7 +19,8 @@ Game::~Game() { CloseWindow(); }
 
 void Game::Run() {
   _isRunning = true;
-  _snake = utils::generateRandomPosition();
+  _snake = utils::generateRandomPosition(specs::cellsPerRow -
+                                         specs::initialSnakeBodyLength);
   this->spawnNewApple();
   while (!WindowShouldClose() && _isRunning) {
     this->update();
