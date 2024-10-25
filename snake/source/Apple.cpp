@@ -1,7 +1,5 @@
 #include "Apple.hpp"
 
-#include <stdexcept>
-
 #include "Specs.hpp"
 #include "raylib.h"
 

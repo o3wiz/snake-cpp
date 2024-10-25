@@ -79,14 +79,18 @@ bool Snake::CollidesWith(const Vector2& position) const {
 void Snake::Draw() const {
   static constexpr float BODY_PART_ROUNDNESS{.5F};
   static constexpr int BODY_PART_SEGMENTS{6};
-  for (const auto& [x, y] : _body) {
+  for (std::size_t idx = 0; const auto& [x, y] : _body) {
     const Rectangle snakeBodyPart{
         .x = x * specs::cellSize,
         .y = y * specs::cellSize,
         .width = specs::cellSize,
         .height = specs::cellSize,
     };
+    const Color color = idx == 0                  ? specs::snakeTailColor
+                        : idx + 1 == _body.size() ? specs::snakeHeadColor
+                                                  : specs::snakeColor;
     DrawRectangleRounded(std::move(snakeBodyPart), BODY_PART_ROUNDNESS,
-                         BODY_PART_SEGMENTS, specs::snakeColor);
+                         BODY_PART_SEGMENTS, color);
+    ++idx;
   }
 }
