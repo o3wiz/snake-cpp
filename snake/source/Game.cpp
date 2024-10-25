@@ -19,13 +19,13 @@ Game::~Game() { CloseWindow(); }
 
 void Game::Run() {
   _isRunning = true;
-  _snake = utils::generateRandomPosition(specs::cellsPerRow -
-                                         specs::initialSnakeBodyLength);
+  this->createSnake();
   this->spawnNewApple();
   while (!WindowShouldClose() && _isRunning) {
     this->update();
     this->Draw();
   }
+  this->Run();
 }
 
 void Game::Draw() const {
@@ -58,11 +58,16 @@ void Game::handleSnakeMovement(const Collision collision) {
       break;
     case Collision::Self:
     case Collision::Wall:
-      _isRunning = false;  // TODO: handle game over
+      this->reset();
       break;
     default:
       break;
   }
+}
+
+void Game::createSnake() {
+  _snake = utils::generateRandomPosition(specs::cellsPerRow -
+                                         specs::initialSnakeBodyLength);
 }
 
 void Game::spawnNewApple() {
@@ -73,33 +78,37 @@ void Game::spawnNewApple() {
   _apple = newApplePosition;
 }
 
+void Game::reset() {
+  _isRunning = false;
+  _nextSnakeDirection = Direction::None;
+}
+
 void Game::handleSnakeKeyPress() {
-  static Direction nextDirection = Direction::None;
   switch (GetKeyPressed()) {
     case KEY_UP:
     case KEY_W:
     case KEY_K:
-      nextDirection = Direction::Up;
+      _nextSnakeDirection = Direction::Up;
       break;
     case KEY_RIGHT:
     case KEY_D:
     case KEY_L:
-      nextDirection = Direction::Right;
+      _nextSnakeDirection = Direction::Right;
       break;
     case KEY_DOWN:
     case KEY_S:
     case KEY_J:
-      nextDirection = Direction::Down;
+      _nextSnakeDirection = Direction::Down;
       break;
     case KEY_LEFT:
     case KEY_A:
     case KEY_H:
-      nextDirection = Direction::Left;
+      _nextSnakeDirection = Direction::Left;
       break;
   }
   if (this->shouldMoveSnake()) {
     const Collision snakeMovementCollision =
-        _snake.Move(nextDirection, _apple.GetPosition());
+        _snake.Move(_nextSnakeDirection, _apple.GetPosition());
     this->handleSnakeMovement(snakeMovementCollision);
   }
 }

@@ -18,11 +18,14 @@ class Game : public Drawable {
   bool shouldMoveSnake() const;
   void handleSnakeMovement(const Collision collision);
   void handleSnakeKeyPress();
+  void createSnake();
   void spawnNewApple();
+  void reset();
 
  private:
   Apple _apple;
   Snake _snake;
+  Direction _nextSnakeDirection = Direction::None;
   bool _isRunning = false;
 };
 
