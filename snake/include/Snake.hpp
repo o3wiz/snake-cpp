@@ -26,6 +26,7 @@ class Snake : public Drawable {
  public:
   Snake(const Vector2& initialHeadPosition = {});
   Collision Move(const Direction newDirection, const Vector2& applePosition);
+  bool CollidesWith(const Vector2& position) const;
   void Draw() const override;
 
  private:

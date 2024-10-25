@@ -7,4 +7,4 @@ namespace snake::utils {
 bool inBounds(const Vector2& position);
 Vector2 generateRandomPosition();
 
-}
+}  // namespace snake::utils

@@ -56,9 +56,16 @@ Collision Snake::detectCollision(const Vector2& applePosition) const {
   const auto collidesWithHead = [&headPosition](const auto& pos) {
     return Vector2Equals(pos, headPosition);
   };
-  if (std::any_of(std::next(_body.rbegin()), _body.rend(), collidesWithHead))
+  if (this->hasDirection() &&
+      std::any_of(std::next(_body.rbegin()), _body.rend(), collidesWithHead))
     return Collision::Self;
   return Collision::None;
+}
+
+bool Snake::CollidesWith(const Vector2& position) const {
+  return std::ranges::any_of(_body, [&position](const auto& bodyPos) {
+    return Vector2Equals(position, bodyPos);
+  });
 }
 
 void Snake::Draw() const {
