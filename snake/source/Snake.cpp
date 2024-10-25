@@ -5,6 +5,7 @@
 #include <unordered_map>
 
 #include "Specs.hpp"
+#include "Utils.hpp"
 #include "raylib.h"
 #include "raymath.h"
 
@@ -48,16 +49,10 @@ void Snake::removeTail() { _body.pop_front(); }
 
 bool Snake::hasDirection() const { return _headDirection != Direction::None; }
 
-static bool positionInBounds(const Vector2& position) {
-  const auto [x, y] = position;
-  return (0 <= x && x < specs::cellsPerRow) &&
-         (0 <= y && y < specs::cellsPerColumn);
-}
-
 Collision Snake::detectCollision(const Vector2& applePosition) const {
   const Vector2 headPosition = this->getHeadPosition();
   if (Vector2Equals(headPosition, applePosition)) return Collision::Apple;
-  if (!positionInBounds(headPosition)) return Collision::Wall;
+  if (!utils::inBounds(headPosition)) return Collision::Wall;
   const auto collidesWithHead = [&headPosition](const auto& pos) {
     return Vector2Equals(pos, headPosition);
   };
