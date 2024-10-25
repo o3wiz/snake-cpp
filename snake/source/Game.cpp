@@ -7,6 +7,7 @@ using namespace snake;
 
 Game::Game() {
   InitWindow(specs::windowWidth, specs::windowHeight, specs::windowTitle);
+  SetTargetFPS(specs::gameFPS);
 }
 
 Game::~Game() { CloseWindow(); }
@@ -14,7 +15,7 @@ Game::~Game() { CloseWindow(); }
 void Game::Run() {
   while (!WindowShouldClose()) {
     BeginDrawing();
-    ClearBackground(RAYWHITE);
+    ClearBackground(specs::backgroundColor);
     EndDrawing();
   }
 }
