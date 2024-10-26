@@ -1,6 +1,7 @@
 #pragma once
 
 #include <chrono>
+#include <filesystem>
 
 #include "raylib.h"
 
@@ -22,5 +23,12 @@ constexpr int initialSnakeBodyLength = 3;
 constexpr std::chrono::milliseconds snakeMoveRate{200};
 constexpr int scoreFontSize = 42;
 constexpr Color scoreColor = DARKGRAY;
+static const std::filesystem::path resourcesDir = SNAKE_RESOURCES;
+static const std::filesystem::path soundsDir = resourcesDir / "sounds";
+static const std::filesystem::path snakeEatSound = soundsDir / "snake_eat.wav";
+static const std::filesystem::path snakeSelfCollision =
+    soundsDir / "snake_self_collision.wav";
+static const std::filesystem::path snakeWallCollision =
+    soundsDir / "snake_wall_collision.wav";
 
 }  // namespace snake::specs

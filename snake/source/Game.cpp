@@ -13,9 +13,19 @@ using namespace snake;
 Game::Game() {
   InitWindow(specs::windowWidth, specs::windowHeight, specs::windowTitle);
   SetTargetFPS(specs::gameFPS);
+  InitAudioDevice();
+  _eatSound = LoadSound(specs::snakeEatSound.c_str());
+  _selfCollisionSound = LoadSound(specs::snakeSelfCollision.c_str());
+  _wallCollisionSound = LoadSound(specs::snakeWallCollision.c_str());
 }
 
-Game::~Game() { CloseWindow(); }
+Game::~Game() {
+  UnloadSound(_eatSound);
+  UnloadSound(_selfCollisionSound);
+  UnloadSound(_wallCollisionSound);
+  CloseAudioDevice();
+  CloseWindow();
+}
 
 void Game::Run() {
   _isRunning = true;
@@ -52,13 +62,18 @@ bool Game::shouldMoveSnake() const {
   return false;
 }
 
-void Game::handleSnakeMovement(const Collision collision) {
+void Game::handleSnakeCollision(const Collision collision) {
   switch (collision) {
     case Collision::Apple:
       this->spawnNewApple();
+      PlaySound(_eatSound);
       break;
     case Collision::Self:
+      PlaySound(_selfCollisionSound);
+      this->reset();
+      break;
     case Collision::Wall:
+      PlaySound(_wallCollisionSound);
       this->reset();
       break;
     default:
@@ -119,6 +134,6 @@ void Game::handleSnakeKeyPress() {
   if (this->shouldMoveSnake()) {
     const Collision snakeMovementCollision =
         _snake.Move(_nextSnakeDirection, _apple.GetPosition());
-    this->handleSnakeMovement(snakeMovementCollision);
+    this->handleSnakeCollision(snakeMovementCollision);
   }
 }

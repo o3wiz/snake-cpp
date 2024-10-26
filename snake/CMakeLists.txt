@@ -7,3 +7,4 @@ set(SRCS
 add_library(snake ${SRCS})
 target_include_directories(snake PUBLIC "include")
 target_link_libraries(snake PUBLIC raylib)
+add_compile_definitions(SNAKE_RESOURCES="${CMAKE_CURRENT_LIST_DIR}/resources")

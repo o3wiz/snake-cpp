@@ -3,6 +3,7 @@
 #include "Apple.hpp"
 #include "Drawable.hpp"
 #include "Snake.hpp"
+#include "raylib.h"
 
 namespace snake {
 
@@ -16,7 +17,7 @@ class Game : public Drawable {
   void Draw() const override;
   void update();
   bool shouldMoveSnake() const;
-  void handleSnakeMovement(const Collision collision);
+  void handleSnakeCollision(const Collision collision);
   void handleSnakeKeyPress();
   void createSnake();
   void spawnNewApple();
@@ -28,6 +29,9 @@ class Game : public Drawable {
   Apple _apple;
   Snake _snake;
   Direction _nextSnakeDirection = Direction::None;
+  Sound _eatSound;
+  Sound _selfCollisionSound;
+  Sound _wallCollisionSound;
   bool _isRunning = false;
 };
 
