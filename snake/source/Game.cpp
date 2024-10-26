@@ -35,7 +35,8 @@ void Game::Run() {
     this->update();
     this->Draw();
   }
-  this->Run();
+  if (!WindowShouldClose())
+	  this->Run();
 }
 
 void Game::Draw() const {
