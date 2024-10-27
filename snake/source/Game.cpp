@@ -1,6 +1,9 @@
 #include "Game.hpp"
 
 #include <chrono>
+#if _MSC_VER
+#include <string>
+#endif
 
 #include "Apple.hpp"
 #include "Snake.hpp"
@@ -14,9 +17,18 @@ Game::Game() {
   InitWindow(specs::windowWidth, specs::windowHeight, specs::windowTitle);
   SetTargetFPS(specs::gameFPS);
   InitAudioDevice();
+#if _MSC_VER
+  std::string path = specs::snakeEatSound.string();
+  _eatSound = LoadSound(path.c_str());
+  path = specs::snakeSelfCollision.string();
+  _selfCollisionSound = LoadSound(path.c_str());
+  path = specs::snakeWallCollision.string();
+  _wallCollisionSound = LoadSound(path.c_str());
+#else
   _eatSound = LoadSound(specs::snakeEatSound.c_str());
   _selfCollisionSound = LoadSound(specs::snakeSelfCollision.c_str());
   _wallCollisionSound = LoadSound(specs::snakeWallCollision.c_str());
+#endif
 }
 
 Game::~Game() {
@@ -35,8 +47,7 @@ void Game::Run() {
     this->update();
     this->Draw();
   }
-  if (!WindowShouldClose())
-	  this->Run();
+  if (!WindowShouldClose()) this->Run();
 }
 
 void Game::Draw() const {
