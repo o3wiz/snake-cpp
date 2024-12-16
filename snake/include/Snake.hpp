@@ -24,23 +24,23 @@ enum class Collision {
 };
 
 class Snake : public Drawable {
- public:
-  Snake(const Vector2& initialHeadPosition = {});
-  Collision Move(const Direction newDirection, const Vector2& applePosition);
-  bool CollidesWith(const Vector2& position) const;
+public:
+  explicit Snake(const Vector2 &initialHeadPosition = {});
+  Collision Move(const Direction newDirection, const Vector2 &applePosition);
+  bool CollidesWith(const Vector2 &position) const;
   void Draw() const override;
   std::size_t SnakeLength() const;
 
- private:
+private:
   Vector2 getDirectionVector(const Direction direction);
   Vector2 getHeadPosition() const;
   void removeTail();
   bool hasDirection() const;
-  Collision detectCollision(const Vector2& applePosition) const;
+  Collision detectCollision(const Vector2 &applePosition) const;
 
- private:
+private:
   std::deque<Vector2> _body;
   Direction _headDirection = Direction::None;
 };
 
-}  // namespace snake
+} // namespace snake

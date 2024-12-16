@@ -1,9 +1,6 @@
 #include "Game.hpp"
 
 #include <chrono>
-#if _MSC_VER
-#include <string>
-#endif
 
 #include "Apple.hpp"
 #include "Snake.hpp"
@@ -17,18 +14,9 @@ Game::Game() {
   InitWindow(specs::windowWidth, specs::windowHeight, specs::windowTitle);
   SetTargetFPS(specs::gameFPS);
   InitAudioDevice();
-#if _MSC_VER
-  std::string path = specs::snakeEatSound.string();
-  _eatSound = LoadSound(path.c_str());
-  path = specs::snakeSelfCollision.string();
-  _selfCollisionSound = LoadSound(path.c_str());
-  path = specs::snakeWallCollision.string();
-  _wallCollisionSound = LoadSound(path.c_str());
-#else
-  _eatSound = LoadSound(specs::snakeEatSound.c_str());
-  _selfCollisionSound = LoadSound(specs::snakeSelfCollision.c_str());
-  _wallCollisionSound = LoadSound(specs::snakeWallCollision.c_str());
-#endif
+  _eatSound = LoadSound(specs::snakeEatSound.string().c_str());
+  _selfCollisionSound = LoadSound(specs::snakeSelfCollision.string().c_str());
+  _wallCollisionSound = LoadSound(specs::snakeWallCollision.string().c_str());
 }
 
 Game::~Game() {
@@ -47,7 +35,8 @@ void Game::Run() {
     this->update();
     this->Draw();
   }
-  if (!WindowShouldClose()) this->Run();
+  if (!WindowShouldClose())
+    this->Run();
 }
 
 void Game::Draw() const {
@@ -76,26 +65,27 @@ bool Game::shouldMoveSnake() const {
 
 void Game::handleSnakeCollision(const Collision collision) {
   switch (collision) {
-    case Collision::Apple:
-      this->spawnNewApple();
-      PlaySound(_eatSound);
-      break;
-    case Collision::Self:
-      PlaySound(_selfCollisionSound);
-      this->reset();
-      break;
-    case Collision::Wall:
-      PlaySound(_wallCollisionSound);
-      this->reset();
-      break;
-    default:
-      break;
+  case Collision::Apple:
+    this->spawnNewApple();
+    PlaySound(_eatSound);
+    break;
+  case Collision::Self:
+    PlaySound(_selfCollisionSound);
+    this->reset();
+    break;
+  case Collision::Wall:
+    PlaySound(_wallCollisionSound);
+    this->reset();
+    break;
+  default:
+    break;
   }
 }
 
 void Game::createSnake() {
-  _snake = utils::generateRandomPosition(specs::cellsPerRow -
-                                         specs::initialSnakeBodyLength);
+  _snake = Snake(utils::generateRandomPosition(
+      specs::cellsPerRow - specs::initialSnakeBodyLength - 1,
+      specs::cellsPerColumn - 1));
 }
 
 void Game::spawnNewApple() {
@@ -103,7 +93,7 @@ void Game::spawnNewApple() {
   do {
     newApplePosition = utils::generateRandomPosition();
   } while (_snake.CollidesWith(newApplePosition));
-  _apple = newApplePosition;
+  _apple = Apple(newApplePosition);
 }
 
 void Game::reset() {
@@ -122,27 +112,28 @@ void Game::displayScore() const {
 
 void Game::handleSnakeKeyPress() {
   switch (GetKeyPressed()) {
-    case KEY_UP:
-    case KEY_W:
-    case KEY_K:
-      _nextSnakeDirection = Direction::Up;
-      break;
-    case KEY_RIGHT:
-    case KEY_D:
-    case KEY_L:
-      _nextSnakeDirection = Direction::Right;
-      break;
-    case KEY_DOWN:
-    case KEY_S:
-    case KEY_J:
-      _nextSnakeDirection = Direction::Down;
-      break;
-    case KEY_LEFT:
-    case KEY_A:
-    case KEY_H:
-      _nextSnakeDirection = Direction::Left;
-      break;
+  case KEY_UP:
+  case KEY_W:
+  case KEY_K:
+    _nextSnakeDirection = Direction::Up;
+    break;
+  case KEY_RIGHT:
+  case KEY_D:
+  case KEY_L:
+    _nextSnakeDirection = Direction::Right;
+    break;
+  case KEY_DOWN:
+  case KEY_S:
+  case KEY_J:
+    _nextSnakeDirection = Direction::Down;
+    break;
+  case KEY_LEFT:
+  case KEY_A:
+  case KEY_H:
+    _nextSnakeDirection = Direction::Left;
+    break;
   }
+
   if (this->shouldMoveSnake()) {
     const Collision snakeMovementCollision =
         _snake.Move(_nextSnakeDirection, _apple.GetPosition());

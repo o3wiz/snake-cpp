@@ -20,15 +20,15 @@ constexpr Color snakeColor{0x40, 0x5c, 0x00, 0xff};
 constexpr Color snakeTailColor{0x2b, 0x3d, 0x00, 0xff};
 constexpr Color appleColor{0xff, 0x48, 0x24, 0xff};
 constexpr int initialSnakeBodyLength = 3;
-constexpr std::chrono::milliseconds snakeMoveRate{150};
+constexpr std::chrono::milliseconds snakeMoveRate{90};
 constexpr int scoreFontSize = 42;
 constexpr Color scoreColor = DARKGRAY;
-static const std::filesystem::path resourcesDir = SNAKE_RESOURCES;
-static const std::filesystem::path soundsDir = resourcesDir / "sounds";
-static const std::filesystem::path snakeEatSound = soundsDir / "snake_eat.wav";
-static const std::filesystem::path snakeSelfCollision =
+inline const std::filesystem::path resourcesDir = SNAKE_RESOURCES;
+inline const std::filesystem::path soundsDir = resourcesDir / "sounds";
+inline const std::filesystem::path snakeEatSound = soundsDir / "snake_eat.wav";
+inline const std::filesystem::path snakeSelfCollision =
     soundsDir / "snake_self_collision.wav";
-static const std::filesystem::path snakeWallCollision =
+inline const std::filesystem::path snakeWallCollision =
     soundsDir / "snake_wall_collision.wav";
 
 }  // namespace snake::specs
